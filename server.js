@@ -88,8 +88,9 @@ app.post('/api/render', (req, res) => {
     outputFile,
     `--props=${propsJson}`,
     '--overwrite',
-    '--gl=angle',          // necesario para entornos sin GPU (nube/Docker)
+    '--gl=angle',
     '--log=verbose',
+    '--chromium-flags=--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage',
   ];
 
   if (CHROME_EXECUTABLE) {
