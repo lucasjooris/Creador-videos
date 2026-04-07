@@ -18,7 +18,28 @@
     </div>
   </header>
 
-  <main>
+  <!-- ── PANTALLA DE LOGIN ──────────────────────────────────── -->
+  <div id="login-screen" style="display:none">
+    <div class="login-card">
+      <div class="logo-area" style="justify-content:center; margin-bottom:28px">
+        <span class="logo-text">BELGA</span>
+        <span class="logo-sub">Inmobiliaria</span>
+      </div>
+      <h2 style="text-align:center; margin-bottom:24px; font-family:Georgia,serif; color:var(--navy)">Acceso al panel</h2>
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="login-password">Contraseña</label>
+          <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
+        </div>
+        <div id="login-error" style="display:none; color:var(--red); font-size:14px; margin-bottom:12px">
+          Contraseña incorrecta. Intentá de nuevo.
+        </div>
+        <button type="submit" class="btn-render">Ingresar</button>
+      </form>
+    </div>
+  </div>
+
+  <main id="main-content" style="display:none">
 
     <!-- ── FORMULARIO ─────────────────────────────────────────── -->
     <section class="card" id="form-section">
@@ -149,7 +170,7 @@
 
   </main>
 
-  <footer>
+  <footer id="main-footer" style="display:none">
     <p>Belga Inmobiliaria · Creador de Videos · Powered by Remotion</p>
   </footer>
 

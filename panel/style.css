@@ -350,6 +350,24 @@ input.error {
   margin-bottom: 8px;
 }
 
+/* ── Login screen ─────────────────────────────────────────── */
+#login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy);
+}
+
+.login-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+  padding: 48px 44px;
+  width: 100%;
+  max-width: 400px;
+}
+
 /* ── Footer ───────────────────────────────────────────────── */
 footer {
   text-align: center;

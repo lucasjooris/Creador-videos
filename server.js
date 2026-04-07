@@ -20,7 +20,36 @@ const CHROME_EXECUTABLE = process.env.REMOTION_CHROMIUM_EXECUTABLE || null;
 
 app.use(cors());
 app.use(express.json());
+
+// ── Protección con contraseña ─────────────────────────────────────────────
+// Configurá la contraseña en Railway: Settings → Variables → PANEL_PASSWORD
+// Si no se define la variable, el panel queda abierto (solo para desarrollo local)
+const PANEL_PASSWORD = process.env.PANEL_PASSWORD;
+
+if (PANEL_PASSWORD) {
+  app.use((req, res, next) => {
+    // Permitir el login sin autenticación
+    if (req.path === '/api/login') return next();
+
+    const token = req.headers['x-panel-token'] || req.query.token || '';
+    if (token === PANEL_PASSWORD) return next();
+
+    // Sin token → devolver 401 (la página de login lo maneja)
+    res.status(401).json({ error: 'No autorizado' });
+  });
+}
+
 app.use(express.static(path.join(__dirname, 'panel')));
+
+// ── Endpoint de login ─────────────────────────────────────────────────────
+app.post('/api/login', (req, res) => {
+  const { password } = req.body;
+  if (!PANEL_PASSWORD || password === PANEL_PASSWORD) {
+    res.json({ ok: true });
+  } else {
+    res.status(401).json({ error: 'Contraseña incorrecta' });
+  }
+});
 
 // Asegurarse de que existe la carpeta out/
 if (!fs.existsSync(OUT_DIR)) {
