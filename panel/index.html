@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Belga Inmobiliaria — Creador de Videos</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo-area">
+        <span class="logo-text">BELGA</span>
+        <span class="logo-sub">Inmobiliaria</span>
+      </div>
+      <div class="header-title">Creador de Videos</div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── FORMULARIO ─────────────────────────────────────────── -->
+    <section class="card" id="form-section">
+      <h2>Datos de la propiedad</h2>
+
+      <form id="property-form" novalidate>
+
+        <!-- Foto -->
+        <div class="field">
+          <label for="imageUrl">📷 URL de la foto principal</label>
+          <input
+            type="url"
+            id="imageUrl"
+            name="imageUrl"
+            placeholder="https://www.ejemplo.com/foto-propiedad.jpg"
+            required
+          />
+          <small>Pegá la URL directa de la imagen (debe ser una URL pública)</small>
+        </div>
+
+        <!-- Operación -->
+        <div class="field">
+          <label>🏷️ Tipo de operación</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="operation" value="Venta" checked />
+              <span>Venta</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="operation" value="Alquiler" />
+              <span>Alquiler</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Precio -->
+        <div class="field">
+          <label for="priceUSD">💵 Precio en USD</label>
+          <div class="input-prefix">
+            <span>USD</span>
+            <input
+              type="number"
+              id="priceUSD"
+              name="priceUSD"
+              placeholder="285000"
+              min="1"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Superficie y ambientes -->
+        <div class="field-row">
+          <div class="field">
+            <label for="surfaceM2">📐 Superficie (m²)</label>
+            <input
+              type="number"
+              id="surfaceM2"
+              name="surfaceM2"
+              placeholder="120"
+              min="1"
+              required
+            />
+          </div>
+          <div class="field">
+            <label for="rooms">🚪 Ambientes</label>
+            <input
+              type="number"
+              id="rooms"
+              name="rooms"
+              placeholder="3"
+              min="1"
+              max="20"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Barrio -->
+        <div class="field">
+          <label for="neighborhood">📍 Barrio / Zona</label>
+          <input
+            type="text"
+            id="neighborhood"
+            name="neighborhood"
+            placeholder="Palermo Soho"
+            required
+          />
+        </div>
+
+        <!-- Tagline (opcional) -->
+        <div class="field">
+          <label for="tagline">✏️ Descripción corta <span class="optional">(opcional)</span></label>
+          <input
+            type="text"
+            id="tagline"
+            name="tagline"
+            placeholder="Departamento con luminosidad excepcional"
+            maxlength="60"
+          />
+        </div>
+
+        <button type="submit" class="btn-render" id="btn-render">
+          <span id="btn-text">▶ Generar Video</span>
+        </button>
+
+      </form>
+    </section>
+
+    <!-- ── PROGRESO Y DESCARGA ────────────────────────────────── -->
+    <section class="card" id="output-section" style="display:none">
+      <h2>Estado del render</h2>
+
+      <div id="progress-bar-wrap">
+        <div id="progress-bar"></div>
+      </div>
+
+      <div id="log-area"></div>
+
+      <div id="download-wrap" style="display:none">
+        <div class="success-msg">✅ ¡Video listo!</div>
+        <a href="/api/download" class="btn-download" download>
+          ⬇️ Descargar video MP4
+        </a>
+        <button class="btn-secondary" id="btn-new">Crear otro video</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Belga Inmobiliaria · Creador de Videos · Powered by Remotion</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

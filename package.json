@@ -6,11 +6,14 @@
     "start": "remotion studio",
     "build": "remotion render",
     "render": "remotion render BelgaPropertyVideo out/property-video.mp4",
-    "upgrade": "remotion upgrade"
+    "upgrade": "remotion upgrade",
+    "panel": "node server.js"
   },
   "dependencies": {
     "@remotion/cli": "4.0.290",
     "@remotion/media-utils": "4.0.290",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
     "remotion": "4.0.290"
   },
   "devDependencies": {
