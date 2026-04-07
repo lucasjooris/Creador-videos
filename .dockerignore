@@ -1,0 +1,9 @@
+node_modules/
+out/
+dist/
+.remotion/
+*.mp4
+*.mov
+*.webm
+.git/
+.gitignore

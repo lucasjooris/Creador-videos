@@ -12,8 +12,11 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const OUT_DIR = path.join(__dirname, 'out');
+
+// En producción (Docker/Railway) se usa el Chrome del sistema
+const CHROME_EXECUTABLE = process.env.REMOTION_CHROMIUM_EXECUTABLE || null;
 
 app.use(cors());
 app.use(express.json());
@@ -50,13 +53,21 @@ app.post('/api/render', (req, res) => {
 
   send('info', 'Iniciando render...');
 
-  const child = spawn('npx', [
+  const renderArgs = [
     'remotion', 'render',
     'BelgaPropertyVideo',
     outputFile,
     `--props=${propsJson}`,
     '--overwrite',
-  ], {
+    '--gl=angle',          // necesario para entornos sin GPU (nube/Docker)
+    '--log=verbose',
+  ];
+
+  if (CHROME_EXECUTABLE) {
+    renderArgs.push(`--browser-executable=${CHROME_EXECUTABLE}`);
+  }
+
+  const child = spawn('npx', renderArgs, {
     cwd: __dirname,
     env: { ...process.env, FORCE_COLOR: '0' },
   });
@@ -99,6 +110,6 @@ app.get('/api/download', (req, res) => {
   res.download(outputFile, 'belga-propiedad.mp4');
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`\n✅ Panel visual disponible en: http://localhost:${PORT}\n`);
 });
