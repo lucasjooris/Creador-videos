@@ -1,2 +1,4 @@
-// Punto de entrada de Remotion
-export { RemotionRoot as default } from './Root';
+import { registerRoot } from 'remotion';
+import { RemotionRoot } from './Root';
+
+registerRoot(RemotionRoot);
