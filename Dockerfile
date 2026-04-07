@@ -31,6 +31,8 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV REMOTION_CHROMIUM_EXECUTABLE=/usr/bin/chromium
 ENV NODE_ENV=production
 ENV PORT=4000
+# Aumentar memoria disponible para Node.js y el bundler
+ENV NODE_OPTIONS="--max-old-space-size=512"
 
 WORKDIR /app
 

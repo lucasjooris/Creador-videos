@@ -90,20 +90,26 @@ app.post('/api/render', async (req, res) => {
 
     // ── Paso 2: Seleccionar la composición ──
     send('log', 'Cargando composición...');
+    // Opciones de Chrome para entornos sin GPU (Docker/Railway)
+    const chromiumOptions = {
+      gl: 'swiftshader',   // renderer por software, sin necesidad de GPU
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--no-zygote',
+        '--single-process',
+        '--disable-accelerated-2d-canvas',
+      ],
+    };
+
     const composition = await selectComposition({
       serveUrl: cachedBundleUrl,
       id: 'BelgaPropertyVideo',
       inputProps: { data },
       browserExecutable: CHROME_EXECUTABLE,
-      chromiumOptions: {
-        gl: 'angle',
-        args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-          '--disable-gpu',
-        ],
-      },
+      chromiumOptions,
     });
 
     // ── Paso 3: Renderizar ──
@@ -117,15 +123,8 @@ app.post('/api/render', async (req, res) => {
       outputLocation: outputFile,
       inputProps: { data },
       browserExecutable: CHROME_EXECUTABLE,
-      chromiumOptions: {
-        gl: 'angle',
-        args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-          '--disable-gpu',
-        ],
-      },
+      chromiumOptions,
+      concurrency: 1,      // un frame a la vez para reducir uso de memoria
       onProgress: ({ progress }) => {
         const pct = Math.round(progress * 100);
         if (pct % 10 === 0) send('log', `Renderizando... ${pct}%`);
